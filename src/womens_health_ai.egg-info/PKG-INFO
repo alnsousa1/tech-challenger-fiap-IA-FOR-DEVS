@@ -1,0 +1,223 @@
+Metadata-Version: 2.4
+Name: womens-health-ai
+Version: 1.0.0
+Summary: Production-ready machine learning pipeline and FastAPI service for women's health risk detection.
+Author: Allan
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi<1.0,>=0.115
+Requires-Dist: uvicorn[standard]<1.0,>=0.30
+Requires-Dist: scikit-learn<2.0,>=1.5
+Requires-Dist: pandas<3.0,>=2.2
+Requires-Dist: numpy<3.0,>=1.26
+Requires-Dist: matplotlib<4.0,>=3.9
+Requires-Dist: seaborn<1.0,>=0.13
+Requires-Dist: shap<1.0,>=0.46
+Requires-Dist: joblib<2.0,>=1.4
+Requires-Dist: httpx<1.0,>=0.28
+Requires-Dist: pytest<9.0,>=8.3
+
+# Women's Health AI Diagnostic Support
+
+Production-ready academic project for women's healthcare risk detection using the Breast Cancer Wisconsin dataset. The repository includes automated data exploration, preprocessing, model training, explainability, a FastAPI backend, tests, Docker support, and a browser dashboard.
+
+## Objective
+
+Build an end-to-end machine learning pipeline that:
+
+- loads a public women's health dataset programmatically
+- classifies breast cancer cases as `benign` or `malignant`
+- prioritizes malignant-case recall for healthcare risk screening
+- exposes predictions and model metadata through a FastAPI API
+- provides explainability through feature importance and SHAP
+
+## Tech Stack
+
+- Python 3.11+
+- FastAPI
+- Scikit-learn
+- Pandas / NumPy
+- Matplotlib / Seaborn
+- SHAP
+- Docker
+- HTML / CSS / JavaScript dashboard
+
+## Dataset
+
+- Source: `sklearn.datasets.load_breast_cancer`
+- Dataset: Breast Cancer Wisconsin (Diagnostic)
+- Loading method: fully programmatic, no manual download step
+- Target remapping: `1 = malignant`, `0 = benign`
+
+## Project Structure
+
+```text
+.
+|-- artifacts/
+|-- reports/
+|   |-- eda/
+|   `-- explainability/
+|-- scripts/
+|   |-- serve.py
+|   `-- train.py
+|-- src/
+|   `-- womens_health_ai/
+|       |-- api/
+|       |   |-- static/
+|       |   |-- main.py
+|       |   `-- routes.py
+|       |-- core/
+|       |-- data/
+|       |-- explainability/
+|       |-- features/
+|       |-- modeling/
+|       |-- reporting/
+|       |-- schemas/
+|       |-- services/
+|       `-- settings.py
+|-- tests/
+|-- Dockerfile
+|-- pyproject.toml
+`-- README.md
+```
+
+## Functional Coverage
+
+### 1. Data Exploration
+
+- descriptive statistics exported to `reports/eda/descriptive_statistics.csv`
+- missing-value analysis exported to `reports/eda/missing_value_summary.csv`
+- feature distributions plot
+- class distribution plot
+- correlation matrix CSV and heatmap
+- diagnosis boxplots for clinically relevant measurements
+
+### 2. Data Preprocessing
+
+- median imputation for numeric features
+- most-frequent imputation for categorical engineered features
+- one-hot encoding for categorical engineered features
+- standard scaling for numeric variables
+- `ColumnTransformer` + `Pipeline` implementation in Scikit-learn
+
+### 3. Modeling
+
+- Logistic Regression
+- Decision Tree
+- train/test split with stratification
+- lightweight hyperparameter search using recall as the selection score
+
+### 4. Evaluation
+
+- accuracy
+- recall
+- F1-score
+- classification report
+- confusion matrix
+
+Healthcare rationale:
+
+- Recall is the primary metric because missing a malignant case can delay intervention and increase patient risk.
+- F1-score is included because healthcare systems still need to control false positives while keeping malignant detection high.
+- Accuracy is reported, but it is not the main selection criterion because a high accuracy score can still hide dangerous false negatives.
+
+### 5. Explainability
+
+- global feature importance per trained model
+- SHAP summary bar plot
+- SHAP beeswarm plot
+- SHAP waterfall plot for an individual case
+
+### 6. API
+
+- `GET /health`
+- `GET /model-info`
+- `POST /predict`
+- `GET /docs`
+- `GET /` dashboard
+
+## How To Run
+
+### Local setup
+
+```powershell
+python -m pip install -e .
+python scripts/train.py
+python scripts/serve.py
+```
+
+The API will be available at `http://127.0.0.1:8000`.
+
+### Direct uvicorn
+
+```powershell
+$env:PYTHONPATH = "src"
+uvicorn womens_health_ai.api.main:app --reload
+```
+
+### Docker
+
+```powershell
+docker build -t womens-health-ai .
+docker run -p 8000:8000 womens-health-ai
+```
+
+## Example Prediction Request
+
+```powershell
+Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/predict -ContentType "application/json" -Body (@{
+  mean_radius = 17.99
+  mean_texture = 10.38
+  mean_perimeter = 122.8
+  mean_area = 1001.0
+  mean_smoothness = 0.1184
+  mean_compactness = 0.2776
+  mean_concavity = 0.3001
+  mean_concave_points = 0.1471
+  mean_symmetry = 0.2419
+  mean_fractal_dimension = 0.07871
+  radius_error = 1.095
+  texture_error = 0.9053
+  perimeter_error = 8.589
+  area_error = 153.4
+  smoothness_error = 0.006399
+  compactness_error = 0.04904
+  concavity_error = 0.05373
+  concave_points_error = 0.01587
+  symmetry_error = 0.03003
+  fractal_dimension_error = 0.006193
+  worst_radius = 25.38
+  worst_texture = 17.33
+  worst_perimeter = 184.6
+  worst_area = 2019.0
+  worst_smoothness = 0.1622
+  worst_compactness = 0.6656
+  worst_concavity = 0.7119
+  worst_concave_points = 0.2654
+  worst_symmetry = 0.4601
+  worst_fractal_dimension = 0.1189
+} | ConvertTo-Json)
+```
+
+## Generated Outputs
+
+Training generates:
+
+- `artifacts/model_bundle.joblib`
+- `artifacts/model_info.json`
+- `reports/eda/*.csv`
+- `reports/eda/*.png`
+- `reports/explainability/*.csv`
+- `reports/explainability/*.png`
+
+## Testing
+
+```powershell
+python -m pytest
+```
+
+## Notes
+
+- The API supports decision-making and screening, not final clinical diagnosis.
+- Missing values are handled through the preprocessing pipeline and are also allowed in inference payloads.
+- Categorical features are engineered from raw clinical measurements to satisfy production preprocessing requirements while keeping the public dataset fully programmatic.

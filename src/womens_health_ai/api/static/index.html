@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suporte Diagnóstico em Saúde da Mulher com IA</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/aos@2.3.4/dist/aos.css"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="page-shell container-xxl">
+      <section class="hero row g-4 align-items-stretch">
+        <div class="col-xl-8" data-aos="fade-right" data-aos-duration="700">
+          <div class="hero-copy card-panel h-100 position-relative overflow-hidden">
+            <div class="hero-glow hero-glow-left"></div>
+            <div class="hero-glow hero-glow-right"></div>
+            <span class="eyebrow eyebrow-badge">
+              <i class="bi bi-heart-pulse-fill"></i>
+              Detecção de Risco em Saúde da Mulher
+            </span>
+          <h1>Suporte ao diagnóstico de câncer de mama com machine learning explicável.</h1>
+          <p class="hero-text">
+            Este dashboard consome um backend em FastAPI com modelos em
+            Scikit-learn, artefatos automatizados de análise exploratória e
+            explicabilidade baseada em SHAP com foco no recall de casos malignos.
+          </p>
+            <div class="hero-highlights row g-3 mt-1">
+              <div class="col-md-4">
+                <div class="highlight-chip">
+                  <i class="bi bi-clipboard2-pulse-fill"></i>
+                  Pipeline clínico automatizado
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="highlight-chip">
+                  <i class="bi bi-graph-up-arrow"></i>
+                  Explicabilidade com SHAP
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="highlight-chip">
+                  <i class="bi bi-shield-check"></i>
+                  Foco em recall maligno
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4" data-aos="fade-left" data-aos-duration="700">
+          <div class="hero-panel card-panel h-100">
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="bi bi-trophy-fill"></i>
+              </div>
+              <div>
+                <span class="stat-label">Modelo campeão</span>
+                <strong id="champion-model">Carregando...</strong>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="bi bi-bullseye"></i>
+              </div>
+              <div>
+                <span class="stat-label">Recall maligno</span>
+                <strong id="champion-recall">Carregando...</strong>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="bi bi-activity"></i>
+              </div>
+              <div>
+                <span class="stat-label">F1-score</span>
+                <strong id="champion-f1">Carregando...</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-grid row g-4">
+        <div class="col-xl-8" data-aos="fade-up" data-aos-delay="80">
+        <section class="panel panel-form card-panel h-100">
+          <div class="panel-header">
+            <div>
+              <h2>Medições da Paciente</h2>
+              <p class="panel-intro">Preencha os campos clínicos ou carregue um exemplo para testar a predição.</p>
+            </div>
+            <div class="action-row">
+              <button type="button" class="ghost-button" id="load-benign">
+                <i class="bi bi-clipboard-check me-2"></i>
+                Carregar exemplo benigno
+              </button>
+              <button type="button" class="ghost-button" id="load-malignant">
+                <i class="bi bi-exclamation-diamond me-2"></i>
+                Carregar exemplo maligno
+              </button>
+            </div>
+          </div>
+          <form id="prediction-form">
+            <div id="feature-groups" class="feature-groups"></div>
+            <button type="submit" class="primary-button">
+              <i class="bi bi-stars me-2"></i>
+              Executar predição
+            </button>
+          </form>
+        </section>
+        </div>
+
+        <div class="col-xl-4" data-aos="fade-up" data-aos-delay="140">
+        <section class="panel panel-results card-panel h-100" id="prediction-results">
+          <div class="panel-header">
+            <div>
+              <h2>Resultado da Predição</h2>
+              <p class="panel-intro">O resultado aparecerá aqui com explicações e indicadores de risco.</p>
+            </div>
+            <span class="pill" id="risk-pill">Aguardando</span>
+          </div>
+          <div id="result-body" class="result-body">
+            <p>Informe as medições da paciente para estimar o risco de malignidade.</p>
+          </div>
+          <div class="metric-grid" id="metric-grid"></div>
+        </section>
+        </div>
+      </section>
+
+      <section class="panel panel-metrics card-panel" data-aos="fade-up" data-aos-delay="180">
+        <div class="panel-header">
+          <div>
+            <h2>Comparação entre Modelos</h2>
+            <p class="panel-intro">Visão comparativa dos candidatos treinados para apoiar a seleção do modelo campeão.</p>
+          </div>
+          <p id="metric-rationale" class="panel-copy"></p>
+        </div>
+        <div id="model-comparison" class="comparison-grid"></div>
+      </section>
+    </main>
+
+    <button
+      type="button"
+      id="scroll-to-result"
+      class="scroll-top-button"
+      aria-label="Voltar ao resultado da predição"
+      title="Voltar ao resultado da predição"
+      hidden
+    >
+      <i class="bi bi-arrow-up-short"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>

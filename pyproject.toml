@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "womens-health-ai"
+version = "1.0.0"
+description = "Production-ready machine learning pipeline and FastAPI service for women's health risk detection."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "Allan" }
+]
+dependencies = [
+  "fastapi>=0.115,<1.0",
+  "uvicorn[standard]>=0.30,<1.0",
+  "scikit-learn>=1.5,<2.0",
+  "pandas>=2.2,<3.0",
+  "numpy>=1.26,<3.0",
+  "matplotlib>=3.9,<4.0",
+  "seaborn>=0.13,<1.0",
+  "shap>=0.46,<1.0",
+  "joblib>=1.4,<2.0",
+  "httpx>=0.28,<1.0",
+  "pytest>=8.3,<9.0"
+]
+
+[project.scripts]
+train-health-model = "womens_health_ai.modeling.training:main"
+generate-health-eda = "womens_health_ai.reporting.eda:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"womens_health_ai.api" = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+

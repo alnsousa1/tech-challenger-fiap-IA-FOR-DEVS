@@ -1,0 +1,467 @@
+{
+  "project_name": "Women's Health AI Diagnostic Support",
+  "project_version": "1.0.0",
+  "dataset": {
+    "name": "Breast Cancer Wisconsin (Diagnostic)",
+    "rows": 569,
+    "columns": 30,
+    "target_distribution": {
+      "benign": 357,
+      "malignant": 212
+    }
+  },
+  "feature_groups": {
+    "mean_measurements": [
+      "mean_radius",
+      "mean_texture",
+      "mean_perimeter",
+      "mean_area",
+      "mean_smoothness",
+      "mean_compactness",
+      "mean_concavity",
+      "mean_concave_points",
+      "mean_symmetry",
+      "mean_fractal_dimension"
+    ],
+    "measurement_error": [
+      "radius_error",
+      "texture_error",
+      "perimeter_error",
+      "area_error",
+      "smoothness_error",
+      "compactness_error",
+      "concavity_error",
+      "concave_points_error",
+      "symmetry_error",
+      "fractal_dimension_error"
+    ],
+    "worst_case_measurements": [
+      "worst_radius",
+      "worst_texture",
+      "worst_perimeter",
+      "worst_area",
+      "worst_smoothness",
+      "worst_compactness",
+      "worst_concavity",
+      "worst_concave_points",
+      "worst_symmetry",
+      "worst_fractal_dimension"
+    ]
+  },
+  "engineered_features": {
+    "numeric": [
+      "area_perimeter_ratio",
+      "compactness_to_concavity_ratio",
+      "radius_error_pct",
+      "worst_radius_delta"
+    ],
+    "categorical": [
+      "radius_band",
+      "texture_band",
+      "concavity_band"
+    ]
+  },
+  "models": {
+    "logistic_regression": {
+      "accuracy": 0.9736842105263158,
+      "recall": 0.9523809523809523,
+      "f1_score": 0.963855421686747,
+      "classification_report": {
+        "benign": {
+          "precision": 0.9726027397260274,
+          "recall": 0.9861111111111112,
+          "f1-score": 0.9793103448275862,
+          "support": 72.0
+        },
+        "malignant": {
+          "precision": 0.975609756097561,
+          "recall": 0.9523809523809523,
+          "f1-score": 0.963855421686747,
+          "support": 42.0
+        },
+        "accuracy": 0.9736842105263158,
+        "macro avg": {
+          "precision": 0.9741062479117941,
+          "recall": 0.9692460317460317,
+          "f1-score": 0.9715828832571666,
+          "support": 114.0
+        },
+        "weighted avg": {
+          "precision": 0.9737105878629081,
+          "recall": 0.9736842105263158,
+          "f1-score": 0.9736164257756981,
+          "support": 114.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          71,
+          1
+        ],
+        [
+          2,
+          40
+        ]
+      ],
+      "best_cv_recall": 0.9588235294117646,
+      "best_params": {
+        "model__C": 1.0
+      }
+    },
+    "decision_tree": {
+      "accuracy": 0.9122807017543859,
+      "recall": 0.8333333333333334,
+      "f1_score": 0.875,
+      "classification_report": {
+        "benign": {
+          "precision": 0.9078947368421053,
+          "recall": 0.9583333333333334,
+          "f1-score": 0.9324324324324325,
+          "support": 72.0
+        },
+        "malignant": {
+          "precision": 0.9210526315789473,
+          "recall": 0.8333333333333334,
+          "f1-score": 0.875,
+          "support": 42.0
+        },
+        "accuracy": 0.9122807017543859,
+        "macro avg": {
+          "precision": 0.9144736842105263,
+          "recall": 0.8958333333333334,
+          "f1-score": 0.9037162162162162,
+          "support": 114.0
+        },
+        "weighted avg": {
+          "precision": 0.9127423822714682,
+          "recall": 0.9122807017543859,
+          "f1-score": 0.9112731152204836,
+          "support": 114.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          69,
+          3
+        ],
+        [
+          7,
+          35
+        ]
+      ],
+      "best_cv_recall": 0.9352941176470587,
+      "best_params": {
+        "model__max_depth": 5,
+        "model__min_samples_leaf": 4
+      }
+    }
+  },
+  "champion_model": {
+    "name": "logistic_regression",
+    "selection_rule": "Highest malignant-class recall, then F1-score, then accuracy.",
+    "metrics": {
+      "accuracy": 0.9736842105263158,
+      "recall": 0.9523809523809523,
+      "f1_score": 0.963855421686747,
+      "classification_report": {
+        "benign": {
+          "precision": 0.9726027397260274,
+          "recall": 0.9861111111111112,
+          "f1-score": 0.9793103448275862,
+          "support": 72.0
+        },
+        "malignant": {
+          "precision": 0.975609756097561,
+          "recall": 0.9523809523809523,
+          "f1-score": 0.963855421686747,
+          "support": 42.0
+        },
+        "accuracy": 0.9736842105263158,
+        "macro avg": {
+          "precision": 0.9741062479117941,
+          "recall": 0.9692460317460317,
+          "f1-score": 0.9715828832571666,
+          "support": 114.0
+        },
+        "weighted avg": {
+          "precision": 0.9737105878629081,
+          "recall": 0.9736842105263158,
+          "f1-score": 0.9736164257756981,
+          "support": 114.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          71,
+          1
+        ],
+        [
+          2,
+          40
+        ]
+      ],
+      "best_cv_recall": 0.9588235294117646,
+      "best_params": {
+        "model__C": 1.0
+      }
+    }
+  },
+  "metric_rationale": "Recall is the primary healthcare metric because false negatives can delay diagnosis for malignant cases. F1-score complements recall by balancing the cost of missed cancers with the operational burden of false positives.",
+  "feature_importance_reports": {
+    "logistic_regression": {
+      "csv": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\explainability\\logistic_regression_feature_importance.csv",
+      "plot": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\explainability\\logistic_regression_feature_importance.png"
+    },
+    "decision_tree": {
+      "csv": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\explainability\\decision_tree_feature_importance.csv",
+      "plot": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\explainability\\decision_tree_feature_importance.png"
+    }
+  },
+  "feature_importance_top_features": {
+    "logistic_regression": [
+      {
+        "feature": "worst_texture",
+        "importance": 1.3499378964827118
+      },
+      {
+        "feature": "mean_concave_points",
+        "importance": 1.0757555364481548
+      },
+      {
+        "feature": "worst_radius_delta",
+        "importance": 1.0210131637315976
+      },
+      {
+        "feature": "worst_concavity",
+        "importance": 1.0034987593240676
+      },
+      {
+        "feature": "radius_error_pct",
+        "importance": 0.9590214402641024
+      },
+      {
+        "feature": "compactness_error",
+        "importance": 0.9019596980901955
+      },
+      {
+        "feature": "worst_symmetry",
+        "importance": 0.8551873923648095
+      },
+      {
+        "feature": "worst_concave_points",
+        "importance": 0.8271345496264875
+      },
+      {
+        "feature": "mean_concavity",
+        "importance": 0.8170521558185528
+      },
+      {
+        "feature": "fractal_dimension_error",
+        "importance": 0.6930899898904976
+      },
+      {
+        "feature": "worst_radius",
+        "importance": 0.6736878833168556
+      },
+      {
+        "feature": "worst_area",
+        "importance": 0.6668890629193313
+      },
+      {
+        "feature": "concave_points_error",
+        "importance": 0.6508761076774014
+      },
+      {
+        "feature": "radius_error",
+        "importance": 0.6477212563651537
+      },
+      {
+        "feature": "area_perimeter_ratio",
+        "importance": 0.6111389002814106
+      },
+      {
+        "feature": "texture_band_low",
+        "importance": 0.5991497307469291
+      },
+      {
+        "feature": "worst_perimeter",
+        "importance": 0.5966090837465913
+      },
+      {
+        "feature": "area_error",
+        "importance": 0.5649764806355245
+      },
+      {
+        "feature": "compactness_to_concavity_ratio",
+        "importance": 0.5126077831563232
+      },
+      {
+        "feature": "mean_texture",
+        "importance": 0.47448794013853407
+      }
+    ],
+    "decision_tree": [
+      {
+        "feature": "worst_perimeter",
+        "importance": 0.7697121780950842
+      },
+      {
+        "feature": "worst_concave_points",
+        "importance": 0.09828589895704891
+      },
+      {
+        "feature": "worst_texture",
+        "importance": 0.04197963278649559
+      },
+      {
+        "feature": "area_perimeter_ratio",
+        "importance": 0.030027070586588628
+      },
+      {
+        "feature": "worst_area",
+        "importance": 0.021360800010609048
+      },
+      {
+        "feature": "texture_band_low",
+        "importance": 0.02074949394636721
+      },
+      {
+        "feature": "worst_concavity",
+        "importance": 0.0056046573521261215
+      },
+      {
+        "feature": "compactness_error",
+        "importance": 0.004526312745620027
+      },
+      {
+        "feature": "area_error",
+        "importance": 0.004205265967774239
+      },
+      {
+        "feature": "worst_radius_delta",
+        "importance": 0.003548689552285744
+      },
+      {
+        "feature": "smoothness_error",
+        "importance": 4.053809504921582e-16
+      },
+      {
+        "feature": "radius_error",
+        "importance": 0.0
+      },
+      {
+        "feature": "mean_fractal_dimension",
+        "importance": 0.0
+      },
+      {
+        "feature": "mean_symmetry",
+        "importance": 0.0
+      },
+      {
+        "feature": "mean_concave_points",
+        "importance": 0.0
+      },
+      {
+        "feature": "mean_concavity",
+        "importance": 0.0
+      },
+      {
+        "feature": "mean_compactness",
+        "importance": 0.0
+      },
+      {
+        "feature": "mean_smoothness",
+        "importance": 0.0
+      },
+      {
+        "feature": "mean_area",
+        "importance": 0.0
+      },
+      {
+        "feature": "mean_perimeter",
+        "importance": 0.0
+      }
+    ]
+  },
+  "shap_reports": {
+    "summary_bar_plot": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\explainability\\logistic_regression_shap_summary_bar.png",
+    "beeswarm_plot": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\explainability\\logistic_regression_shap_beeswarm.png",
+    "waterfall_plot": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\explainability\\logistic_regression_shap_waterfall.png"
+  },
+  "eda_reports": {
+    "descriptive_statistics": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\eda\\descriptive_statistics.csv",
+    "missing_value_summary": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\eda\\missing_value_summary.csv",
+    "correlation_matrix_csv": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\eda\\correlation_matrix.csv",
+    "class_distribution_plot": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\eda\\class_distribution.png",
+    "feature_distribution_plot": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\eda\\feature_distributions.png",
+    "correlation_heatmap": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\eda\\correlation_matrix.png",
+    "diagnosis_boxplots": "C:\\Users\\Allan\\Documents\\Projetos\\tech-challenger-fiap-IA-FOR-DEVS\\reports\\eda\\diagnosis_boxplots.png"
+  },
+  "sample_payloads": {
+    "malignant_example": {
+      "mean_radius": 17.99,
+      "mean_texture": 10.38,
+      "mean_perimeter": 122.8,
+      "mean_area": 1001.0,
+      "mean_smoothness": 0.1184,
+      "mean_compactness": 0.2776,
+      "mean_concavity": 0.3001,
+      "mean_concave_points": 0.1471,
+      "mean_symmetry": 0.2419,
+      "mean_fractal_dimension": 0.07871,
+      "radius_error": 1.095,
+      "texture_error": 0.9053,
+      "perimeter_error": 8.589,
+      "area_error": 153.4,
+      "smoothness_error": 0.006399,
+      "compactness_error": 0.04904,
+      "concavity_error": 0.05373,
+      "concave_points_error": 0.01587,
+      "symmetry_error": 0.03003,
+      "fractal_dimension_error": 0.006193,
+      "worst_radius": 25.38,
+      "worst_texture": 17.33,
+      "worst_perimeter": 184.6,
+      "worst_area": 2019.0,
+      "worst_smoothness": 0.1622,
+      "worst_compactness": 0.6656,
+      "worst_concavity": 0.7119,
+      "worst_concave_points": 0.2654,
+      "worst_symmetry": 0.4601,
+      "worst_fractal_dimension": 0.1189
+    },
+    "benign_example": {
+      "mean_radius": 13.54,
+      "mean_texture": 14.36,
+      "mean_perimeter": 87.46,
+      "mean_area": 566.3,
+      "mean_smoothness": 0.09779,
+      "mean_compactness": 0.08129,
+      "mean_concavity": 0.06664,
+      "mean_concave_points": 0.04781,
+      "mean_symmetry": 0.1885,
+      "mean_fractal_dimension": 0.05766,
+      "radius_error": 0.2699,
+      "texture_error": 0.7886,
+      "perimeter_error": 2.058,
+      "area_error": 23.56,
+      "smoothness_error": 0.008462,
+      "compactness_error": 0.0146,
+      "concavity_error": 0.02387,
+      "concave_points_error": 0.01315,
+      "symmetry_error": 0.0198,
+      "fractal_dimension_error": 0.0023,
+      "worst_radius": 15.11,
+      "worst_texture": 19.26,
+      "worst_perimeter": 99.7,
+      "worst_area": 711.2,
+      "worst_smoothness": 0.144,
+      "worst_compactness": 0.1773,
+      "worst_concavity": 0.239,
+      "worst_concave_points": 0.1288,
+      "worst_symmetry": 0.2977,
+      "worst_fractal_dimension": 0.07259
+    }
+  },
+  "generated_at_utc": "2026-04-07T12:30:16.956215+00:00"
+}

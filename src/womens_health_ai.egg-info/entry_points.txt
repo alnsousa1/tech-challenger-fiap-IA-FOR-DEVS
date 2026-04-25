@@ -1,0 +1,3 @@
+[console_scripts]
+generate-health-eda = womens_health_ai.reporting.eda:main
+train-health-model = womens_health_ai.modeling.training:main
